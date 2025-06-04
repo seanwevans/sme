@@ -24,7 +24,7 @@ clang -o bran bran.c
 
 ## Experiment: Magoo DB
 
-`magoo_db.c` is the simplest possible in memory CRUD database. Compile with
+`magoo_db.c` is the simplest possible in memory CRUD database. Record IDs start at `1` and `0` indicates a failure to create a record. Compile with
 ```sh
 clang -o magoo magoo_db.c
 ```

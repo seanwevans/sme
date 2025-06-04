@@ -4,6 +4,8 @@
 #include <stdio.h>
 
 #define MAX_RECORDS 256
+/* Record IDs start at 1. An ID of 0 indicates failure/invalid record and the
+ * highest valid ID is MAX_RECORDS-1. */
 
 typedef struct {
   uint8_t id;
@@ -14,17 +16,22 @@ typedef struct {
 
 typedef struct {
   Record records[MAX_RECORDS];
-  uint8_t next_id;
+  uint16_t next_id;
 } Database;
 
 void init_database(Database *db) {
-  for (uint8_t i = 0; i < MAX_RECORDS; i++) {
+  for (uint16_t i = 0; i < MAX_RECORDS; i++) {
     db->records[i].active = false;
   }
   db->next_id = 1;
 }
 
 uint8_t create_record(Database *db, const char *data, uint32_t length) {
+  if (db->next_id >= MAX_RECORDS) {
+    /* Database is full. Return 0 to signal failure. */
+    return 0;
+  }
+
   uint8_t id = db->next_id++;
   Record *record = &db->records[id];
   record->id = id;
@@ -61,7 +68,16 @@ int main() {
   const char data2[] = "Second record";
 
   uint8_t id1 = create_record(&db, data1, sizeof(data1) - 1);
+  if (!id1) {
+    printf("Failed to create first record\n");
+    return 1;
+  }
+
   uint8_t id2 = create_record(&db, data2, sizeof(data2) - 1);
+  if (!id2) {
+    printf("Failed to create second record\n");
+    return 1;
+  }
 
   const char *read_data1 = get_record_data(&db, id1);
   const char *read_data2 = get_record_data(&db, id2);
