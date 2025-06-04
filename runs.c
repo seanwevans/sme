@@ -4,7 +4,7 @@
 #define M 2
 #define N 255
 #define S 0
-#define E 64
+#define E 64 /* exclusive upper bound for seeds */
 
 int find_longest_run(unsigned int seed) {
   srand(seed);
@@ -30,7 +30,7 @@ int find_longest_run(unsigned int seed) {
   return number_with_longest_run;
 }
 
-int is_little_endian() {
+int is_little_endian(void) {
   unsigned int x = 1;
   return *((unsigned char *)&x) == 1;
 }
@@ -46,11 +46,11 @@ unsigned long long get_64bit_number(unsigned long long number) {
   return reversed;
 }
 
-int main() {
+int main(void) {
   unsigned long long bit_representation = 0;
   unsigned int seed = S;
 
-  for (; seed <= E; seed++) {
+  for (; seed < E; seed++) {
     unsigned int run_number = find_longest_run(seed);
     bit_representation |= ((unsigned long long)run_number << seed);
   }
