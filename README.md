@@ -4,6 +4,11 @@ Various mathematical experiments. Each directory entry is a small C program with
 its own focus. The compile commands below assume clang but any C compiler should
 work.
 
+## Building with Makefile
+
+Run `make adboxes`, `make bran`, `make magoo`, `make pfd` or `make runs` to
+compile individual experiments. `make all` builds every program.
+
 ## Experiment: Arithmetic Derivatives
 
 `adboxes.c` visualizes how the arithmetic derivative behaves modulo a chosen
