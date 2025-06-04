@@ -2,6 +2,11 @@
 
 Various mathematical experiments.
 
+## Building with Makefile
+
+Run `make adboxes`, `make bran`, `make magoo`, `make pfd` or `make runs` to
+compile individual experiments. `make all` builds every program.
+
 ## Experiment: Arithmetic Derivatives
 
 `adboxes.c` visualizes the modular spread of the arithmetic derivative. Compile with
